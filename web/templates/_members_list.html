@@ -1,0 +1,48 @@
+{% if member_list %}
+
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Plan</th>
+          <th scope="col">Joined Date</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for member in member_list %}
+        <tr>
+          <td>{{ member.last_name }}, {{ member.first_name }}</a></td>
+          <td>{{ member.email }}</td>
+          <td>{{ member.joined_on }}</td>
+          <td><a href="{% url 'web:member' member.id %}">View</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+
+    {% block pagination %}
+      {% if is_paginated %}
+          <div class="pagination">
+              <span class="page-links">
+                  {% if page_obj.has_previous %}
+                      <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">previous</a>
+                  {% endif %}
+                  <span class="page-current">
+                      Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                  </span>
+                  {% if page_obj.has_next %}
+                      <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">next</a>
+                  {% endif %}
+              </span>
+          </div>
+      {% endif %}
+    {% endblock %}
+
+{% else %}
+    <div class="alert alert-dismissible alert-secondary">
+        No members are available.
+    </div>
+{% endif %}
+

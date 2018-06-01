@@ -1,0 +1,50 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="page-header">
+                <h1>Pay Membership</h1>
+            </div>
+
+            {% if form %}
+
+                {% if errors %}
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="alert alert-dismissible alert-danger">
+                            {{ errors }}
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <form action="{% url 'web:pay' %}" method="post" class="bs-component">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+
+                            <div class="form-group">
+                              <fieldset>
+                                  <button type="submit" class="btn btn-primary">Pay</button>
+                              </fieldset>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            {% else %}
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="alert alert-dismissible alert-success">
+                            {{ message }}
+                        </div>
+                    </div>
+                </div>
+
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}
